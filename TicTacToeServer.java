@@ -1,6 +1,3 @@
-// Fig. 21.7: TicTacToeServer.java
-// This class maintains a game of Tic-Tac-Toe for two
-// client applets.
 import java.awt.*;
 import java.awt.event.*;
 import java.net.*;
@@ -27,8 +24,6 @@ public class TicTacToeServer extends JFrame {
       xMove = true;
       players = new Player[ 2 ];
       currentPlayer = 0;
- 
-      // set up ServerSocket
       try {
          server = new ServerSocket( 5000, 2 );
       }
@@ -45,7 +40,6 @@ public class TicTacToeServer extends JFrame {
       show();
    }
 
-   // wait for two connections so game can be played
    public void execute()
    {
       for ( int i = 0; i < players.length; i++ ) {
@@ -59,9 +53,7 @@ public class TicTacToeServer extends JFrame {
             System.exit( 1 );
          }
       }
-
-      // Player X is suspended until Player O connects.
-      // Resume player X now.          
+        
       synchronized ( players[ 0 ] ) {
          players[ 0 ].threadSuspended = false;   
          players[ 0 ].notify();
@@ -88,10 +80,6 @@ public class TicTacToeServer extends JFrame {
        }
    }
    
- 
-   // Determine if a move is valid.
-   // This method is synchronized because only one move can be
-   // made at a time.
    public synchronized boolean validMove( int loc,
                                           int player )
    {
@@ -173,7 +161,6 @@ public class TicTacToeServer extends JFrame {
    }
 }
 
-// Player class to manage each Player as a thread
 class Player extends Thread {
    private Socket connection;
    private DataInputStream input;
@@ -277,21 +264,4 @@ class Player extends Thread {
          System.exit( 1 );
       }
    }
-}                                                            
-
-
-
-/**************************************************************************
- * (C) Copyright 1999 by Deitel & Associates, Inc. and Prentice Hall.     *
- * All Rights Reserved.                                                   *
- *                                                                        *
- * DISCLAIMER: The authors and publisher of this book have used their     *
- * best efforts in preparing the book. These efforts include the          *
- * development, research, and testing of the theories and programs        *
- * to determine their effectiveness. The authors and publisher make       *
- * no warranty of any kind, expressed or implied, with regard to these    *
- * programs or to the documentation contained in these books. The authors *
- * and publisher shall not be liable in any event for incidental or       *
- * consequential damages in connection with, or arising out of, the       *
- * furnishing, performance, or use of these programs.                     *
- *************************************************************************/
+}

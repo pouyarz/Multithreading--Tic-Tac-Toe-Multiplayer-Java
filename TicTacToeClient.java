@@ -1,4 +1,3 @@
-// Fig. 21.8: TicTacToeClient.java
 // Client for the TicTacToe program
 import java.awt.*;
 import java.awt.event.*;
@@ -8,8 +7,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 
-// Client class to let a user play Tic-Tac-Toe with
-// another user across a network.
 public class TicTacToeClient extends JApplet
                              implements Runnable {
    private JTextField id;
@@ -23,7 +20,6 @@ public class TicTacToeClient extends JApplet
    private char myMark;
    private boolean myTurn;
 
-   // Set up user-interface and board
    public void init()
    {
       display = new JTextArea( 4, 30 );
@@ -37,13 +33,6 @@ public class TicTacToeClient extends JApplet
 
       board = new Square[ 3 ][ 3 ];
       
-      
-
-      // When creating a Square, the location argument to the
-      // constructor is a value from 0 to 8 indicating the
-      // position of the Square on the board. Values 0, 1,
-      // and 2 are the first row, values 3, 4, and 5 are the
-      // second row. Values 6, 7, and 8 are the third row.
       for ( int row = 0; row < board.length; row++ )
       {
          for ( int col = 0;
@@ -79,9 +68,6 @@ public class TicTacToeClient extends JApplet
       getContentPane().add( panel2, BorderLayout.CENTER );
    }
 
-   // Make connection to server and get associated streams.
-   // Start separate thread to allow this applet to
-   // continually update its output in text area display.
    public void start()
    {
       try {
@@ -100,11 +86,8 @@ public class TicTacToeClient extends JApplet
       outputThread.start();
    }
 
-   // Control thread that allows continuous update of the
-   // text area display.
    public void run()
    {
-      // First get player's mark (X or O)
       try {
          myMark = input.readChar();
          id.setText( "You are player \"" + myMark + "\"" );
@@ -114,7 +97,6 @@ public class TicTacToeClient extends JApplet
          e.printStackTrace();         
       }
 
-      // Receive messages sent to client
       while ( true ) {
          try {
             String s = input.readUTF();
@@ -126,7 +108,6 @@ public class TicTacToeClient extends JApplet
       }
    }
 
-   // Process messages sent to client
    public void processMessage( String s )
    {
       if ( s.equals( "Valid move." ) ) {
@@ -192,7 +173,6 @@ public class TicTacToeClient extends JApplet
    }
 }
 
-// Maintains one square on the board
 class Square extends JPanel {
    private char mark;
    private int location;
@@ -242,18 +222,3 @@ class SquareListener extends MouseAdapter {
       applet.sendClickedSquare( square.getSquareLocation() );
    }
 }
-
-/**************************************************************************
- * (C) Copyright 1999 by Deitel & Associates, Inc. and Prentice Hall.     *
- * All Rights Reserved.                                                   *
- *                                                                        *
- * DISCLAIMER: The authors and publisher of this book have used their     *
- * best efforts in preparing the book. These efforts include the          *
- * development, research, and testing of the theories and programs        *
- * to determine their effectiveness. The authors and publisher make       *
- * no warranty of any kind, expressed or implied, with regard to these    *
- * programs or to the documentation contained in these books. The authors *
- * and publisher shall not be liable in any event for incidental or       *
- * consequential damages in connection with, or arising out of, the       *
- * furnishing, performance, or use of these programs.                     *
- *************************************************************************/
